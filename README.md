@@ -8,9 +8,13 @@ To write a program to predict the profit of a city using the linear regression m
 2. Anaconda – Python 3.7 Installation / Jupyter notebook
 
 ## Algorithm
-1.Intialize weights randomly. 2.Compute predicted. 3.Compute gradient of loss function. 4.Update weights using gradient descent.
-
-## Program:
+1. Import Libraries as Load numpy, pandas, and StandardScaler for data processing.
+2. Add a bias term to features (X).Initialize theta (coefficients) to zeros.Update theta using Gradient Descent
+3. Read dataset (50_Startups.csv).Extract features (X) and target (y) from the dataset.
+4. Normalize X and y using StandardScaler for better gradient descent performance.
+5. Pass scaled X and y to the linear_regression() function to compute theta.## Program:
+6. Use the model equation:𝑦pred=[1,𝑋scaled]⋅𝜃y pred​ =[1,X scaled​ ]⋅θ
+7. Print the final predicted output.
 ```
 /*
 Program to implement the linear regression using gradient descent.
@@ -20,54 +24,39 @@ RegisterNumber:212223220052
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
-
 def linear_regression(X1,y,learning_rate=0.01,num_iters=1000):
     X=np.c_[np.ones(len(X1)),X1]
-    theta = np.zeros(X.shape[1]).reshape(-1,1)
+    theta=np.zeros(X.shape[1]).reshape(-1,1)
     for _ in range(num_iters):
-        predictions = (X).dot(theta).reshape(-1,1)
-        errors = (predictions-y).reshape(-1,1)
-        theta-=learning_rate*(1/len(X1))*X.T.dot(errors)
+        predictions=(X).dot(theta).reshape(-1,1)
+        errors=(predictions-y).reshape(-1,1)
+        theta -=learning_rate*(1/len(X1))*X.T.dot(errors)
     return theta
-    
-data=pd.read_csv('50_Startups.csv',header=None)
-data.head()
-X = (data.iloc[1:,:-2].values)
+data=pd.read_csv('50_Startups.csv');
+print(data.head())
+X=(data.iloc[1:,:-2].values)
 print(X)
-
 X1=X.astype(float)
-scaler = StandardScaler()
+scaler=StandardScaler()
 y=(data.iloc[1:,-1].values).reshape(-1,1)
 print(y)
-
 X1_Scaled=scaler.fit_transform(X1)
 Y1_Scaled=scaler.fit_transform(y)
 print(X1_Scaled)
 print(Y1_Scaled)
-
-theta = linear_regression(X1_Scaled,Y1_Scaled)
-
-new_data=np.array([165349.2,136897.8,471784.1]).reshape(-1,1)
-new_Scaled = scaler.fit_transform(new_data)
-prediction = np.dot(np.append(1,new_Scaled),theta)
-prediction = prediction.reshape(-1,1)
+theta=linear_regression(X1_Scaled,Y1_Scaled)
+new_data=np.array([16539.2,136897.8,471784.1]).reshape(-1,1)
+new_Scaled=scaler.fit_transform(new_data)
+prediction=np.dot(np.append(1,new_Scaled),theta)
+prediction=prediction.reshape(-1,1)
 pre=scaler.inverse_transform(prediction)
-print(f"Predicted Value:{pre}")
+print(f"Predicted value:{pre}")
 ```
+# Output:
+#![Screenshot 2024-08-30 112656](https://github.com/user-attachments/assets/1072069c-37a1-4dc7-9873-b8718f3faf39)
+![Screenshot 2024-08-30 112708](https://github.com/user-attachments/assets/5b900e04-53ae-4476-8187-f423aacb8c51)
 
-## Output:
-![Machine Learning 1](https://github.com/RamkumarGunasekaran/Implementation-of-Linear-Regression-Using-Gradient-Descent/assets/144870820/7fcbc1d1-43dc-43ed-ae21-6868878c6ef8)
-
-![2](https://github.com/RamkumarGunasekaran/Implementation-of-Linear-Regression-Using-Gradient-Descent/assets/144870820/5bd92552-d361-41cf-8b3a-4cba9f359aca)
-
-![3](https://github.com/RamkumarGunasekaran/Implementation-of-Linear-Regression-Using-Gradient-Descent/assets/144870820/c4ed46dd-719e-4205-848f-f04bb6cdb1f4)
-
-![4](https://github.com/RamkumarGunasekaran/Implementation-of-Linear-Regression-Using-Gradient-Descent/assets/144870820/10c87e67-b003-468a-b739-e7d0a08d0d93)
-![5](https://github.com/RamkumarGunasekaran/Implementation-of-Linear-Regression-Using-Gradient-Descent/assets/144870820/aca29fc8-5bfd-424b-93a5-5c236a3b2b59)
-
-![6](https://github.com/RamkumarGunasekaran/Implementation-of-Linear-Regression-Using-Gradient-Descent/assets/144870820/2df83165-0ea3-4446-be9b-a028c075f254)
-
-
+![Screenshot 2024-08-30 112715](https://github.com/user-attachments/assets/2e70a6e0-9e41-4164-b391-54733b3bc586)
 
 ## Result:
 Thus the program to implement the linear regression using gradient descent is written and verified using python programming.
